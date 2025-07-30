@@ -1,22 +1,27 @@
-import { Button } from "@/components/ui/button";
+// components/dialogs/AboutDialog.tsx
+"use client";
+
 import {
   Dialog,
-  DialogClose,
+  DialogTrigger,
   DialogContent,
   DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
+  DialogClose,
 } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
 
 export function About() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">About</Button>
+        <Button className="bg-gradient-to-r from-purple-600 to-pink-600 hover:scale-105 transition-transform duration-300 shadow-xl">
+          About
+        </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-2xl sm:min-h-[400px] p-6">
+      <DialogContent className="sm:max-w-2xl sm:min-h-[400px] p-6 border-2 border-purple-500 rotate-[2deg] scale-95 hover:rotate-0 hover:scale-100 transition-all duration-500">
         <DialogHeader>
           <DialogTitle className="text-2xl font-semibold text-center">
             About Final Note

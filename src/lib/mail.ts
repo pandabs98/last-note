@@ -1,4 +1,3 @@
-// lib/mail.ts
 import nodemailer from "nodemailer";
 
 const transporter = nodemailer.createTransport({
@@ -16,9 +15,13 @@ interface MailOptions {
   text: string;
 }
 
-export default async function sendMail({ to, subject, text }: MailOptions): Promise<void> {
+export default async function sendMail({
+  to,
+  subject,
+  text,
+}: MailOptions): Promise<void> {
   const info = await transporter.sendMail({
-    from: '"Your App" <no-reply@yourapp.com>',
+    from: '"LastNote" <no-reply@lastnote.app>',
     to,
     subject,
     text,

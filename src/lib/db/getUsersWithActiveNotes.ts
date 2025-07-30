@@ -1,9 +1,6 @@
-// lib/db/getUsersWithActiveNotes.ts
-import Profile from "@/models/Profile";
-import Note from "@/models/Note";
+import Profile from "@/models/user";
 
 export async function getUsersWithNotesAndRecipients() {
-  // Get all users who have inactivity triggers enabled
   return await Profile.find({
     $or: [
       { "inactivityTriggers.1day": true },
@@ -11,5 +8,7 @@ export async function getUsersWithNotesAndRecipients() {
       { "inactivityTriggers.1week": true },
       { "inactivityTriggers.1month": true },
     ],
-  });
+  })
+    .populate("recipients") // ensure recipient details (like email/name) are available
+    .lean(); // better performance
 }

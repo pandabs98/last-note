@@ -13,7 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { toast, Toaster } from "sonner";
 import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -37,49 +37,47 @@ const CreateNoteDialog = ({ onSuccess }: Props) => {
     setIsSaved(false);
   };
 
-  const handleSave = async () => {
-  if (loading) return;
-  setLoading(true);
+  const handleSave = useCallback(async () => {
+    if (loading) return;
+    setLoading(true);
 
-  try {
-    if (!form.title && !form.content) {
-      toast.error("Note is empty");
-      return;
-    }
-
-    let noteId;
-
-    if (draftId) {
-      await axios.put(`/api/auth/notes?id=${draftId}`, form);
-    } else {
-      const res = await axios.post("/api/auth/notes", form);
-      noteId = res.data?.note?._id;
-      if (form.status === "draft" && noteId) {
-        setDraftId(noteId);
+    try {
+      if (!form.title && !form.content) {
+        toast.error("Note is empty");
+        return;
       }
+
+      let noteId;
+
+      if (draftId) {
+        await axios.put(`/api/auth/notes?id=${draftId}`, form);
+      } else {
+        const res = await axios.post("/api/auth/notes", form);
+        noteId = res.data?.note?._id;
+        if (form.status === "draft" && noteId) {
+          setDraftId(noteId);
+        }
+      }
+
+      toast.success(`${form.status === "draft" ? "Draft" : "Note"} saved`);
+
+      setIsSaved(true);
+      onSuccess?.();
+      setOpen(false);
+      reset();
+      router.refresh();
+    } catch (error) {
+      toast.error("Failed to save note");
+      console.error(error);
+    } finally {
+      setLoading(false);
     }
+  }, [loading, form, draftId, onSuccess, router]);
 
-    toast.success(`${form.status === "draft" ? "Draft" : "Note"} saved`);
-
-    setIsSaved(true);
-    onSuccess?.();
-    setOpen(false);    // ❗️Close dialog after saving
-    reset();           // ❗️Reset form after closing
-    router.refresh();
-    
-  } catch (error) {
-    toast.error("Failed to save note");
-    console.error(error);
-  } finally {
-    setLoading(false);
-  }
-};
-
-
-  const autoSaveDraft = async () => {
+  const autoSaveDraft = useCallback(async () => {
     if (!form.title && !form.content) return;
     if (form.status === "draft") await handleSave();
-  };
+  }, [form, handleSave]);
 
   useEffect(() => {
     if (!open) return;
@@ -88,12 +86,12 @@ const CreateNoteDialog = ({ onSuccess }: Props) => {
       if (!isSaved) {
         autoSaveDraft();
       }
-    }, 5000); 
+    }, 5000);
 
     return () => {
       if (autosaveTimer.current) clearInterval(autosaveTimer.current);
     };
-  }, [form, open, isSaved]);
+  }, [form, open, isSaved, autoSaveDraft]);
 
   return (
     <>

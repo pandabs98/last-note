@@ -49,6 +49,7 @@ const EditNoteDialog: React.FC<EditNoteDialogProps> = ({ note, onSuccess }) => {
       setOpen(false);
       onSuccess();
     } catch (err) {
+      console.error(err)
       toast.error("Failed to update note");
     } finally {
       setLoading(false);

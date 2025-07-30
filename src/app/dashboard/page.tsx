@@ -26,6 +26,7 @@ const DashboardPage = () => {
       const uniqueNotes = Array.from(new Map(res.data.data.map((note: Note) => [note._id, note])).values());
       setNotes(uniqueNotes);
     } catch (err) {
+      console.error(err)
       toast.error("Failed to load notes.");
     }
   }, []);

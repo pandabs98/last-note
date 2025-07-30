@@ -1,4 +1,3 @@
-// components/dialogs/ContactDialog.tsx
 "use client";
 
 import { useState } from "react";
@@ -53,10 +52,24 @@ export function Contact({ open, setOpen }: ContactDialogProps) {
 
       setSuccess("Message submitted successfully!");
       setDetails({ name: "", email: "", message: "" });
-    } catch (err: any) {
-      const msg =
-        err.response?.data?.error || err.message || "Something went wrong";
-      setError(msg);
+    } catch (err: unknown) {
+      if (
+        typeof err === "object" &&
+        err !== null &&
+        "response" in err &&
+        typeof err.response === "object" &&
+        err.response !== null &&
+        "data" in err.response &&
+        typeof err.response.data === "object" &&
+        err.response.data !== null &&
+        "error" in err.response.data
+      ) {
+        setError((err.response.data as { error: string }).error);
+      } else if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("Something went wrong");
+      }
     } finally {
       setLoading(false);
     }

@@ -3,7 +3,7 @@ import { auth } from "@clerk/nextjs/server";
 import dbConnect from "@/lib/db";
 import Profile from "@/models/user";
 
-export async function GET(req: NextRequest) {
+export async function GET() {
   await dbConnect();
   const { userId: clerkUserId } = await auth();
 

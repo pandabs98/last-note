@@ -1,4 +1,3 @@
-// components/dialogs/AboutDialog.tsx
 "use client";
 
 import {
@@ -21,25 +20,25 @@ export function About() {
           About
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-2xl sm:min-h-[400px] p-6 border-2 border-purple-500 rotate-[2deg] scale-95 hover:rotate-0 hover:scale-100 transition-all duration-500">
+      <DialogContent className="sm:max-w-2xl sm:min-h-[400px] p-6 border-2 border-purple-500 rotate-[2deg] scale-95 hover:rotate-0 hover:scale-100 transition-all duration-500 perspective-[1000px]">
         <DialogHeader>
           <DialogTitle className="text-2xl font-semibold text-center">
             About Final Note
           </DialogTitle>
           <DialogDescription className="text-center text-muted-foreground">
-            Learn more about our purpose and features.
+            Learn more about our mission and features.
           </DialogDescription>
         </DialogHeader>
 
         <div className="mt-6 space-y-4 text-sm sm:text-base leading-relaxed text-foreground">
           <p>
-            Welcome to the <strong>Final Note</strong> platform! We're dedicated to providing you a secure space to save important personal messages and data.
+            Welcome to <strong>Final Note</strong> — your trusted space to store important personal messages and data securely.
           </p>
           <p>
-            If you're ever unable to access your account due to unexpected life circumstances, Final Note ensures your saved messages are safely delivered to your trusted contacts or loved ones.
+            If you're ever unable to access your account due to unforeseen life circumstances, Final Note ensures your saved messages are safely delivered to your chosen contacts.
           </p>
           <p>
-            Whether it's private information, last wishes, or important instructions, our system is built to handle your final notes with care and respect.
+            Whether it's private information, last wishes, or crucial instructions, our platform is built to handle your final messages with sensitivity and care.
           </p>
         </div>
 

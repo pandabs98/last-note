@@ -17,7 +17,7 @@ const HomePage: React.FC = () => {
   const [typeDone, setTypeDone] = useState(false);
   const [showEnvelope, setShowEnvelope] = useState(false);
   const [openEnvelope, setOpenEnvelope] = useState(false);
-  const [showMsgCard, setShowMsgCard] = useState(false);
+  // const [showMsgCard, setShowMsgCard] = useState(false);
   const [journeyPhase, setJourneyPhase] = useState<"idle" | "toMailbox" | "toLovedOne">("idle");
 
   useEffect(() => {

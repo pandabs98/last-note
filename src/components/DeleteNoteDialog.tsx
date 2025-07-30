@@ -8,42 +8,41 @@ import { Button } from "@/components/ui/button";
 import { Trash } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { Input } from "@/components/ui/input";
 
-const DeleteNoteDialog = ({
-  id,
-  onSuccess,
-}: {
+type DeleteNoteDialogProps = {
   id: string;
   onSuccess: () => void;
-}) => {
+};
+
+const DeleteNoteDialog = ({ id, onSuccess }: DeleteNoteDialogProps) => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [password, setPassword] = useState("");
 
   const handleDelete = async () => {
-  setLoading(true);
-  try {
-    const res = await axios.post(`/api/auth/notes/${id}/delete`, {
-      password: password, 
-    });
+    setLoading(true);
+    try {
+      const res = await axios.post(`/api/auth/notes/${id}/delete`, {
+        password,
+      });
 
-    toast.success(res.data.message || "Note deleted successfully");
-    onSuccess();
-    setOpen(false);
-    setPassword("");
-  } catch (error: any) {
-    if (error.response?.data?.error) {
-      toast.error(error.response.data.error);
-    } else {
-      toast.error("Something went wrong");
+      toast.success(res.data.message || "Note deleted successfully");
+      onSuccess();
+      setOpen(false);
+      setPassword("");
+    } catch (error: unknown) {
+      const axiosError = error as AxiosError<{ error: string }>;
+      if (axiosError.response?.data?.error) {
+        toast.error(axiosError.response.data.error);
+      } else {
+        toast.error("Something went wrong");
+      }
+    } finally {
+      setLoading(false);
     }
-  } finally {
-    setLoading(false);
-  }
-};
-
+  };
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>

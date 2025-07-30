@@ -1,4 +1,4 @@
-import mongoose, {model, models, Document, Schema} from 'mongoose'
+import {model, models, Document, Schema} from 'mongoose'
 
 export interface IContact extends Document{
     name: string,
@@ -8,7 +8,7 @@ export interface IContact extends Document{
     updatedAt?: Date
 }
 
-const contactSchema = new mongoose.Schema<IContact>({
+const contactSchema = new Schema<IContact>({
     name:{
         type: String,
         required: true,

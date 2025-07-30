@@ -25,9 +25,11 @@ export function Products() {
         <DialogContent className="bg-white dark:bg-zinc-900 text-black dark:text-white max-w-md shadow-2xl rounded-3xl border-2 border-purple-500 rotate-[2deg] scale-95 hover:rotate-0 hover:scale-100 transition-all duration-500">
           <h2 className="text-2xl font-bold mb-2">Our Products</h2>
           <p className="mb-4">
-            We're still crafting something extraordinary! 🚀<br />
-            Have a great product idea? We'd love to hear it.
+            We&apos;re still crafting something extraordinary! 🚀<br />
+            Have a great product idea? We&apos;d love to hear it.
           </p>
+
+
 
           <Button
             className="bg-purple-700 text-white hover:bg-purple-800 transition"

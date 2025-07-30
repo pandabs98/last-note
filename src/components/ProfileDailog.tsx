@@ -44,11 +44,12 @@ export function ProfileDialog() {
       const data = await res.json();
 
       if (data) {
-        setRecipients(data.recipients?.length ? data.recipients : recipients);
-        setTriggers(data.inactivityTriggers || triggers);
-        setHasPassword(!!data.hasPassword); // ✅ retain this line
+        setRecipients((prev) => data.recipients?.length ? data.recipients : prev);
+        setTriggers((prev) => data.inactivityTriggers || prev);
+        setHasPassword(!!data.hasPassword);
       }
     } catch (err) {
+      console.error(err);
       toast.error("Error loading profile");
     }
   };
@@ -88,6 +89,7 @@ export function ProfileDialog() {
       if (!res.ok) throw new Error("Failed to save profile");
       toast.success("Profile updated");
     } catch (err) {
+      console.error(err)
       toast.error("Failed to update profile");
     } finally {
       setLoadingProfile(false);
@@ -113,6 +115,7 @@ export function ProfileDialog() {
       toast.success("Secure password saved");
       setSecurePassword("");
     } catch (err) {
+      console.error(err)
       toast.error("Failed to save password");
     } finally {
       setLoadingPwd(false);

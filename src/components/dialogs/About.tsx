@@ -35,11 +35,12 @@ export function About() {
             Welcome to <strong>Final Note</strong> — your trusted space to store important personal messages and data securely.
           </p>
           <p>
-            If you're ever unable to access your account due to unforeseen life circumstances, Final Note ensures your saved messages are safely delivered to your chosen contacts.
+            If you&apos;re ever unable to access your account due to unforeseen life circumstances, Final Note ensures your saved messages are safely delivered to your chosen contacts.
           </p>
           <p>
-            Whether it's private information, last wishes, or crucial instructions, our platform is built to handle your final messages with sensitivity and care.
+            Whether it&apos;s private information, last wishes, or crucial instructions, our platform is built to handle your final messages with sensitivity and care.
           </p>
+
         </div>
 
         <DialogFooter className="mt-6 sm:justify-center">

@@ -6,11 +6,11 @@ import { Button } from "@/components/ui/button";
 import { ModeToggle } from "@/components/ui/ModeToggle";
 import { About } from "@/components/dialogs/About";
 import { Products } from "@/components/dialogs/Products";
-import { Contact } from "@/components/dialogs/Contact"; 
+import { Contact } from "@/components/dialogs/Contact";
 
 export default function Home() {
   const [clicked, setClicked] = useState(false);
-  const [contactOpen, setContactOpen] = useState(false); 
+  const [contactOpen, setContactOpen] = useState(false);
 
   const handleClicked = () => setClicked((prev) => !prev);
 
@@ -24,7 +24,7 @@ export default function Home() {
       component: <About />,
     },
     {
-      label: "Use products",
+      label: "View Products",
       component: <Products />,
     },
     {
@@ -53,9 +53,12 @@ export default function Home() {
           initial={{ y: 200 }}
           animate={{ y: clicked ? 0 : 200 }}
           transition={{ type: "spring", stiffness: 70 }}
-          className="z-20"
+          className="z-20 relative"
         >
-          <Button onClick={handleClicked} className="bg-gradient-to-r from-purple-600 to-pink-600 hover:scale-105 transition-transform duration-300 shadow-xl">
+          <Button
+            onClick={handleClicked}
+            className="bg-gradient-to-r from-purple-600 to-pink-600 hover:scale-105 transition-transform duration-300 shadow-xl"
+          >
             {clicked ? "Menu" : "Home"}
           </Button>
         </motion.div>
@@ -79,31 +82,39 @@ export default function Home() {
       <AnimatePresence>
         {clicked && (
           <motion.div
-            className="flex flex-col items-center mt-16 relative"
+            className="flex flex-col items-center mt-8 relative"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           >
             {/* Desktop View */}
-            <div className="hidden md:flex flex-col items-center w-full">
+            <div className="hidden md:flex flex-col items-center w-full relative">
+              {/* Vertical line from Menu to horizontal bar */}
+              <div className="relative h-8">
+                <div className="absolute top-0 left-1/2 w-0.5 h-full bg-black dark:bg-white z-10 transform -translate-x-1/2" />
+              </div>
+
+              {/* Horizontal Line */}
               <motion.div
-                className="relative h-0.5 bg-white w-full max-w-[720px] mb-8"
+                className="relative h-0.5 bg-black dark:bg-white w-full max-w-[720px] mb-12"
                 initial={{ width: 0 }}
                 animate={{ width: "100%" }}
                 transition={{ delay: 0.5 }}
               >
+                {/* Vertical lines to each child node */}
                 {subItems.map((_, idx) => (
                   <div
                     key={idx}
-                    className="absolute top-0 h-4 w-0.5 bg-white"
+                    className="absolute top-0 h-8 w-0.5 bg-black dark:bg-white"
                     style={{
                       left: `calc(${(idx + 0.5) * (100 / subItems.length)}%)`,
                       transform: "translateX(-50%)",
                     }}
-                  ></div>
+                  />
                 ))}
               </motion.div>
 
+              {/* Buttons under each vertical line */}
               <div className="flex justify-between gap-6 max-w-[720px] w-full px-4 flex-wrap">
                 {subItems.map((item, index) => (
                   <motion.div
@@ -111,6 +122,7 @@ export default function Home() {
                     initial={{ y: -20, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ delay: 0.6 + index * 0.1 }}
+                    className="flex flex-col items-center"
                   >
                     {item.component ? (
                       item.component
@@ -129,12 +141,16 @@ export default function Home() {
 
             {/* Mobile View */}
             <div className="flex md:hidden flex-col items-start mt-10 relative ml-4">
-              <div className="absolute left-0 top-0 bottom-0 w-0.5 bg-white" />
-              <div className="absolute left-0 -top-8 h-8 w-0.5 bg-white" />
+              {/* Vertical line from Menu */}
+              <div className="absolute left-0 -top-8 h-8 w-0.5 bg-black dark:bg-white" />
+              {/* Main vertical spine */}
+              <div className="absolute left-0 top-0 bottom-0 w-0.5 bg-black dark:bg-white" />
+
               <div className="flex flex-col gap-6 ml-6">
                 {subItems.map((item, idx) => (
                   <div key={idx} className="relative">
-                    <div className="absolute -left-6 top-1/2 transform -translate-y-1/2 w-6 h-0.5 bg-white" />
+                    {/* Horizontal connector to item */}
+                    <div className="absolute -left-6 top-1/2 transform -translate-y-1/2 w-6 h-0.5 bg-black dark:bg-white" />
                     {item.component ? (
                       item.component
                     ) : (
